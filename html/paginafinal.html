@@ -1,13 +1,176 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>¿Quieres ser mi novia digo mi 14 de febrero?</title>
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta de San Valentín</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .heartbeat { animation: heartbeat 1.5s infinite; }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-pink-100 to-rose-200 min-h-screen">
     <div id="root"></div>
-    <script type="module" src="src/main.jsx"></script>
-  </body>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function App() {
+            const [accepted, setAccepted] = useState(false);
+            const [buttonSize, setButtonSize] = useState(45);
+            const [currentMessage, setCurrentMessage] = useState(null);
+            const [confetti, setConfetti] = useState(null);
+
+            const messages = [
+                { id: 1, text: "¿Segura?", img: "https://i.pinimg.com/originals/77/6b/21/776b215bed3deeef47fd3aa657685a18.gif" },
+                { id: 2, text: "Piénsalo mejor", img: "https://i.pinimg.com/originals/e1/c3/88/e1c388133e0f998e25bb17c837b74a14.gif" },
+                { id: 3, text: "¡Di que sí!", img: "https://media.tenor.com/Bn88VELdNI8AAAAi/peach-goma.gif" },
+                { id: 4, text: "Te haré muy feliz", img: "https://media.tenor.com/N2oqtqaB_G0AAAAi/peach-goma.gif" }
+            ];
+
+            useEffect(() => {
+                setConfetti(new JSConfetti());
+            }, []);
+
+            const handleAccept = () => {
+                setAccepted(true);
+                confetti.addConfetti({
+                    emojis: ['❤️', '🥰', '💖', '🎉'],
+                    emojiSize: 70,
+                    confettiNumber: 150
+                });
+            };
+
+            const handleDecline = () => {
+                const randomIndex = Math.floor(Math.random() * messages.length);
+                setCurrentMessage(messages[randomIndex]);
+                setButtonSize(prev => Math.min(prev + 20, 200));
+            };
+
+            return (
+                <div className="min-h-screen flex items-center justify-center p-4">
+                    {!accepted ? (
+                        <div className="text-center space-y-8 max-w-2xl mx-auto">
+                            <h1 className="text-4xl md:text-6xl font-bold text-rose-600 font-[Pacifico] heartbeat">
+                                ¿Quieres ser mi San Valentín?
+                            </h1>
+                            
+                            <img 
+                                src={currentMessage?.img || "https://i.pinimg.com/originals/db/aa/c1/dbaac13f6278b91a15e480752b8a7242.gif"}
+                                alt="Gif romántico"
+                                className="mx-auto rounded-lg shadow-xl w-64 h-64 object-cover"
+                            />
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <button
+                                    onClick={handleAccept}
+                                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105"
+                                    style={{ height: `${buttonSize}px` }}
+                                >
+                                    ¡Sí, acepto! 💖
+                                </button>
+                                
+                                <button
+                                    onClick={handleDecline}
+                                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-full transition-all duration-300 transform hover:scale-105"
+                                >
+                                    {currentMessage?.text || "No"}
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="text-center space-y-8 animate-fade-in">
+                            <h1 className="text-4xl md:text-6xl font-bold text-rose-600 font-[Pacifico]">
+                                ¡Feliz San Valentín! 🥰
+                            </h1>
+                            <img
+                                src="https://i.pinimg.com/originals/9b/dc/c6/9bdcc6206c1d36a37149d31108c6bb41.gif"
+                                alt="Celebración"
+                                className="mx-auto rounded-lg shadow-xl w-64 h-64 object-cover"
+                            />
+                            <div className="space-y-4">
+                                <p className="text-xl text-rose-700">
+                                    Nuestra cuenta regresiva:
+                                </p>
+                                <Countdown />
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        function Countdown() {
+            const [timeLeft, setTimeLeft] = useState({
+                days: 0,
+                hours: 0,
+                minutes: 0,
+                seconds: 0
+            });
+
+            useEffect(() => {
+                const calculateTime = () => {
+                    const targetDate = new Date('2024-02-14');
+                    const now = new Date();
+                    const difference = targetDate - now;
+
+                    if (difference > 0) {
+                        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                        const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+                        const minutes = Math.floor((difference / 1000 / 60) % 60);
+                        const seconds = Math.floor((difference / 1000) % 60);
+                        
+                        setTimeLeft({ days, hours, minutes, seconds });
+                    }
+                };
+
+                const timer = setInterval(calculateTime, 1000);
+                return () => clearInterval(timer);
+            }, []);
+
+            return (
+                <div className="grid grid-cols-4 gap-2 max-w-md mx-auto">
+                    {Object.entries(timeLeft).map(([unit, value]) => (
+                        <div key={unit} className="bg-rose-500 text-white p-2 rounded-lg">
+                            <div className="text-2xl font-bold">{value}</div>
+                            <div className="text-sm">{unit}</div>
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        Pacifico: ['Pacifico', 'cursive']
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: 0, transform: 'translateY(20px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' }
+                        }
+                    },
+                    animation: {
+                        fadeIn: 'fadeIn 0.5s ease-out'
+                    }
+                }
+            }
+        }
+    </script>
+</body>
 </html>
