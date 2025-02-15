@@ -9,16 +9,29 @@
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Añadir fuente Pacifico -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
         @keyframes heartbeat {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
-        .heartbeat { animation: heartbeat 1.5s infinite; }
+        .heartbeat { 
+            animation: heartbeat 1.5s infinite; 
+            font-family: 'Pacifico', cursive;
+        }
+        
+        /* Asegurar que el contenedor ocupe toda la altura */
+        #root {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
-<body class="bg-gradient-to-r from-pink-100 to-rose-200 min-h-screen">
+<body class="bg-gradient-to-r from-pink-100 to-rose-200">
     <div id="root"></div>
 
     <script type="text/babel">
@@ -57,10 +70,10 @@
             };
 
             return (
-                <div className="min-h-screen flex items-center justify-center p-4">
+                <div className="w-full max-w-2xl mx-4">
                     {!accepted ? (
-                        <div className="text-center space-y-8 max-w-2xl mx-auto">
-                            <h1 className="text-4xl md:text-6xl font-bold text-rose-600 font-[Pacifico] heartbeat">
+                        <div className="text-center space-y-8">
+                            <h1 className="text-4xl md:text-6xl text-rose-600 heartbeat">
                                 ¿Quieres ser mi novia digo mi eterno 14 de febrero?
                             </h1>
                             
@@ -88,8 +101,8 @@
                             </div>
                         </div>
                     ) : (
-                        <div className="text-center space-y-8 animate-fade-in">
-                            <h1 className="text-4xl md:text-6xl font-bold text-rose-600 font-[Pacifico]">
+                        <div className="text-center space-y-8">
+                            <h1 className="text-4xl md:text-6xl text-rose-600 heartbeat">
                                 ¡Feliz Día mi Princesa! 🥰
                             </h1>
                             <img
@@ -158,15 +171,6 @@
                 extend: {
                     fontFamily: {
                         Pacifico: ['Pacifico', 'cursive']
-                    },
-                    keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: 0, transform: 'translateY(20px)' },
-                            '100%': { opacity: 1, transform: 'translateY(0)' }
-                        }
-                    },
-                    animation: {
-                        fadeIn: 'fadeIn 0.5s ease-out'
                     }
                 }
             }
