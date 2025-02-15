@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva Oportunidad</title>
+    <link rel="stylesheet" href="css/pagina3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+    background: url('../img/fondo3.jpg') center/cover no-repeat fixed;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+}
+
+.contenedor {
+    background: rgba(255, 250, 240, 0.95);
+    padding: 2rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    border: 2px solid #cfb53b;
+    box-shadow: 0 0 25px rgba(207, 181, 59, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.titulo {
+    color: #a17f1a;
+    text-align: center;
+    font-size: 2.4em;
+    margin-bottom: 1.5rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    animation: tituloBrillo 2s infinite alternate;
+}
+
+.carta p {
+    color: #6b5b45;
+    font-size: 1.1em;
+    line-height: 1.8;
+    margin: 1.5rem 0;
+    padding: 15px;
+    border-bottom: 2px solid #ffd700;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.btn {
+    background: linear-gradient(45deg, #ffd700, #cfb53b);
+    color: #4a3713;
+    padding: 12px 40px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.2em;
+    cursor: pointer;
+    display: block;
+    margin: 2rem auto 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(207, 181, 59, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(207, 181, 59, 0.4);
+}
+
+@keyframes tituloBrillo {
+    from { text-shadow: 0 0 10px rgba(255, 215, 0, 0.3); }
+    to { text-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+}
+
+@keyframes maquinaEscribir {
+    from { width: 0 }
+    to { width: 100% }
+}
+  </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1 class="titulo">Nueva Oportunidad</h1>
+        <div class="carta">
+            <p>Te prometo escuchar con atención cada palabra...</p>
+            <p>Voy a planear citas especiales cada...</p>
+            <p>Aprenderé a demostrar mi amor en tu lenguaje...</p>
+            <p>Guardaré siempre tu corazón como el mayor...</p>
+        </div>
+        <button class="btn" onclick="location.href='html/pagina4.html'">Siguiente ✨</button>
+    </div>
+    <script src="js/pagina3.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    // Efecto máquina de escribir
+    document.querySelectorAll('.carta p').forEach((p, index) => {
+        const textoOriginal = p.textContent;
+        p.textContent = '';
+        let i = 0;
+        
+        const escribir = () => {
+            if(i < textoOriginal.length) {
+                p.textContent += textoOriginal.charAt(i);
+                i++;
+                setTimeout(escribir, 50 + Math.random() * 30);
+            }
+        };
+        setTimeout(escribir, index * 600);
+    });
+
+    // Efecto brillo dinámico en botón
+    const btn = document.querySelector('.btn');
+    setInterval(() => {
+        btn.style.boxShadow = `0 0 ${15 + Math.random() * 10}px rgba(255, 215, 0, 0.4)`;
+    }, 1000);
+
+    // Efecto onda al hacer clic
+    btn.addEventListener('click', (e) => {
+        const onda = document.createElement('div');
+        onda.className = 'onda';
+        onda.style.left = e.clientX - btn.offsetLeft + 'px';
+        onda.style.top = e.clientY - btn.offsetTop + 'px';
+        btn.appendChild(onda);
+        setTimeout(() => onda.remove(), 1000);
+    });
+});
+  </script>
+</body>
+</html>
