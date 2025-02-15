@@ -85,5 +85,43 @@
         <button class="btn" onclick="location.href='pagina3.html'">Siga leyendo mija aun no acaba 🌹</button>
     </div>
     <script src="js/pagina2.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    // Animación de pétalos
+    const petalos = ['🌸', '💮', '🌺'];
+    const crearPetalo = () => {
+        const petalo = document.createElement('div');
+        petalo.className = 'petalo';
+        petalo.textContent = petalos[Math.floor(Math.random() * petalos.length)];
+        petalo.style.left = Math.random() * 100 + 'vw';
+        petalo.style.animation = `caer ${5 + Math.random() * 3}s linear`;
+        document.body.appendChild(petalo);
+        setTimeout(() => petalo.remove(), 6000);
+    };
+    setInterval(crearPetalo, 500);
+
+    // Efecto hover párrafos
+    document.querySelectorAll('.carta p').forEach(p => {
+        p.addEventListener('mouseenter', () => {
+            p.style.transform = 'translateX(20px)';
+            p.style.boxShadow = '5px 5px 15px rgba(230, 103, 103, 0.2)';
+        });
+        p.addEventListener('mouseleave', () => {
+            p.style.transform = 'translateX(0)';
+            p.style.boxShadow = 'none';
+        });
+    });
+
+    // Efecto botón
+    const btn = document.querySelector('.btn');
+    btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        btn.style.setProperty('--x', x + 'px');
+        btn.style.setProperty('--y', y + 'px');
+    });
+});
+    </script>
 </body>
 </html>
