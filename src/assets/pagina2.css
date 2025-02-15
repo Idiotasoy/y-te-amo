@@ -1,0 +1,65 @@
+body {
+    background: url('../img/fondo2.jpg') center/cover no-repeat fixed;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Dancing Script', cursive;
+}
+
+.contenedor {
+    background: rgba(255, 245, 238, 0.93);
+    padding: 2rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 600px;
+    border: 2px solid #e66767;
+    box-shadow: 0 0 25px rgba(230, 103, 103, 0.2);
+    backdrop-filter: blur(5px);
+}
+
+.titulo {
+    color: #e66767;
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.carta p {
+    color: #786fa6;
+    font-size: 1.2em;
+    line-height: 1.7;
+    margin: 1.2rem 0;
+    padding: 15px;
+    border-left: 3px solid #f8a5c2;
+    transition: all 0.3s ease;
+    background: linear-gradient(to right, rgba(248, 165, 194, 0.1), transparent);
+}
+
+.btn {
+    background: linear-gradient(45deg, #f8a5c2, #e66767);
+    color: white;
+    padding: 12px 35px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.2em;
+    cursor: pointer;
+    display: block;
+    margin: 2rem auto 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(230, 103, 103, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(230, 103, 103, 0.4);
+}
+
+@keyframes caer {
+    from { transform: translateY(-100vh) rotate(0deg); }
+    to { transform: translateY(100vh) rotate(360deg); }
+}
